@@ -7,9 +7,9 @@ spring:
     hibernate:
       ddl-auto: validate
   profiles:
-    active: ${ACTIVE_PROFILE}
+    active: ${ACTIVE_PROFILE:dev}
 
 server:
-  port: 8082
+  port: 8085
   servlet:
-    context-path: /api
+    context-path: /api/documents
