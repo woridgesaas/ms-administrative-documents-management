@@ -1,0 +1,12 @@
+<div th:fragment="document-footer(address, ice, rc, phone)">
+    <div style="position: fixed; bottom: 0; left: 0; width: 100%; text-align: center; font-size: 10px; color: #7f8c8d; border-top: 1px solid #bdc3c7; padding-top: 10px; background-color: white;">
+        <p style="margin: 0;">
+            <span th:text="${address}">Adresse du Siège Social, Casablanca, Maroc</span>
+        </p>
+        <p style="margin: 3px 0;">
+            <strong>ICE :</strong> <span th:text="${ice}"></span> |
+            <strong>RC :</strong> <span th:text="${rc}"></span> |
+            <strong>Tél :</strong> <span th:text="${phone}"></span>
+        </p>
+    </div>
+</div>

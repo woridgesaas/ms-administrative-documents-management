@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <style>
+        @page { size: A4; margin: 2cm; }
+        body { font-family: 'Arial', sans-serif; }
+        .title { text-align: center; font-size: 20px; font-weight: bold; margin: 50px 0; border: 1px solid #000; padding: 10px; }
+        .salary-table { width: 100%; border-collapse: collapse; margin-top: 30px; }
+        .salary-table td { padding: 10px; border-bottom: 1px dashed #ccc; }
+    </style>
+</head>
+<body>
+<div th:insert="~{layout/header :: document-header(${tenantName}, ${logoUrl}, 'SERVICE PAIE')}"></div>
+<div class="title">ATTESTATION DE SALAIRE</div>
+
+<div class="content">
+    <p>Nous certifions que <strong>[[${employeeFullName ?: ''}]]</strong> (CIN: [[${cin ?: ''}]]), employé(e) en tant que [[${jobTitle}]], perçoit les émoluments suivants :</p>
+
+    <table class="salary-table">
+        <tr>
+            <td><strong>Salaire Brut Mensuel :</strong></td>
+            <td style="text-align: right;">[[${grossSalary ?: ''}]] MAD</td>
+        </tr>
+        <tr>
+            <td><strong>Salaire Net à Payer :</strong></td>
+            <td style="text-align: right;"><strong>[[${netSalary ?: ''}]] MAD</strong></td>
+        </tr>
+    </table>
+    <br/>
+    <p>L'intéressé(e) est régulièrement déclaré(e) à la CNSS sous le numéro : <strong>[[${cnssNumber ?: ''}]]</strong>.</p>
+</div>
+
+<div th:insert="~{layout/footer :: document-footer(${address}, ${ice}, ${rc}, ${phone})}"></div>
+</body>
+</html>

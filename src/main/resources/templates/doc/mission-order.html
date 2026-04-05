@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <style>
+        @page { size: A4; margin: 2cm; }
+        body { font-family: 'Arial', sans-serif; line-height: 1.6; color: #1a1a1a; font-size: 14px; }
+        .location-date { text-align: right; margin-bottom: 30px; }
+        .document-title { text-align: center; font-weight: bold; font-size: 18px; text-decoration: underline; margin-bottom: 40px; }
+        .content-section { text-align: justify; margin-bottom: 20px; }
+        .transport-list { margin: 15px 0; padding-left: 40px; }
+        .signature-section { margin-top: 80px; margin-left: 60%; text-align: center; }
+        .signature-space { height: 100px; }
+    </style>
+</head>
+<body>
+<div th:insert="~{layout/header :: document-header(${tenantName}, ${logoUrl}, 'DIRECTION GENERALE')}"></div>
+<div class="location-date">
+    <span th:text="${tenantCity}">Casablanca</span>, le <span th:text="${#temporals.format(currentDate, 'dd/MM/yyyy')}"></span>
+</div>
+
+<div class="document-title">OBJET : ORDRE DE MISSION</div>
+
+<div class="content-section">
+    <p>
+        Nous soussignés, l'entreprise <strong th:text="${tenantName} ?: ''">[Nom de l'entreprise]</strong>,
+        sis au <span th:text="${tenantAddress} ?: ''">[Adresse de l'entreprise]</span>,
+        attestons par la présente que Monsieur/Madame <strong th:text="${employeeFullName}">[Nom de l'employé]</strong>,
+        titulaire de la CIN N° <strong th:text="${cin} ?: ''">[XXXXXX]</strong>,
+        et immatriculée à la CNSS sous le N° <strong th:text="${cnssNumber} ?: ''">[XXXXXX]</strong>,
+        travaille au sein de notre établissement en qualité de <strong>« <span th:text="${jobTitle} ?: ''">[Fonction]</span> »</strong>.
+    </p>
+
+    <p>
+        Par la présente, nous confions à Monsieur/Madame <strong th:text="${employeeFullName} ?: ''">[Nom de l'employé]</strong>,
+        résidant à <span th:text="${employeeAddress} ?: ''">[Adresse de l'employé]</span>,
+        la mission suivante : <strong th:text="${missionPurpose} ?: ''">[Description de la mission]</strong>.
+    </p>
+
+    <p>
+        Le déplacement de Monsieur/Madame <strong th:text="${employeeFullName} ?: ''">[Nom de l'employé]</strong>
+        aura lieu entre son lieu de travail situé à <strong th:text="${workLocation} ?: ''">[Ville Travail]</strong>,
+        son lieu de résidence familiale à <strong th:text="${homeLocation} ?: ''">[Ville Résidence]</strong>
+        et ses lieux de missions situés entre <strong th:text="${missionZones} ?: ''">[Zones de mission]</strong>.
+    </p>
+
+    <p>Pour son voyage aller-retour, le salarié utilisera les moyens de transports suivants :</p>
+
+    <ul class="transport-list">
+        <li th:each="transport : ${transportModes}" th:text="${transport} ?: ''"></li>
+    </ul>
+
+    <p>Cette attestation est délivrée à l’intéressé pour servir et valoir ce que de droit.</p>
+</div>
+
+<div class="signature-section">
+    <p><strong>Direction Générale</strong></p>
+    <p>Signature - Cachet</p>
+    <div class="signature-space"></div>
+</div>
+
+<div th:insert="~{layout/footer :: document-footer(${address}, ${ice}, ${rc}, ${phone})}"></div>
+</body>
+</html>
