@@ -1,0 +1,18 @@
+<div th:fragment="document-header(tenantName, logoUrl, department)">
+    <div style="width: 100%; border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 20px;">
+        <table style="width: 100%;">
+            <tr>
+                <td style="width: 50%; vertical-align: middle;">
+                    <img th:if="${logoUrl}" th:src="${logoUrl}" style="max-height: 70px;" alt="Logo"/>
+                    <h2 th:unless="${logoUrl}" th:text="${tenantName}" style="margin:0; color:#2c3e50;">NOM ENTREPRISE</h2>
+                </td>
+                <td style="width: 50%; text-align: right; vertical-align: top;">
+                    <h4 style="margin: 0; color: #7f8c8d;" th:text="${department}">DEPARTEMENT RH</h4>
+                    <p style="font-size: 11px; color: #95a5a6; margin-top: 5px;">
+                        Date: <span th:text="${#temporals.format(#temporals.createNow(), 'dd/MM/yyyy')}"></span>
+                    </p>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
