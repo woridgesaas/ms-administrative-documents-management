@@ -8,7 +8,12 @@ spring:
       ddl-auto: validate
   profiles:
     active: ${ACTIVE_PROFILE:dev}
-  thymeleaf:
+  rabbitmq:
+    host: ${RABBITMQ_HOST}
+    port: ${RABBITMQ_PORT}
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_PASSWORD}
+thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
     mode: HTML
@@ -29,7 +34,14 @@ ressource:
     rc: "45678"
     cnss: "9988776"
     phone: "+212 5 22 00 00 00"
+
+rabbitmq:
+  exchange: notification.exchange
+  routing:
+    documentRequestCreated: document.request.created
 server:
   port: 8085
   servlet:
     context-path: /api/documents
+services:
+  auth-url: ${AUTH_SERVICE_URL}
