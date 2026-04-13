@@ -1,9 +1,6 @@
 package org.woridge.ms_administrative_documents_management.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.UUID;
@@ -18,6 +15,7 @@ import java.util.UUID;
 public class User {
 
     @Id
+    @GeneratedValue
     private UUID id;
 
     @Column(name = "CIN", nullable = false)
