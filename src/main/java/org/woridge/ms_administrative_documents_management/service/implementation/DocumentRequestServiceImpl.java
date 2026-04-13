@@ -33,8 +33,7 @@ public class DocumentRequestServiceImpl implements DocumentRequestService {
     public DocumentRequestResponse createDocumentRequest(CreateDocumentRequest dto, String cin) {
 
         // 1. Get user
-        User user = userRepository.findByCin(cin)
-                .orElseThrow(() -> new UserNotFoundException("User not found: " + cin));
+        User user = getOrCreateUser(cin);
 
         // 2. Get document type
         DocumentType type = typeRepository.findByCategory(dto.documentCode())
@@ -52,12 +51,17 @@ public class DocumentRequestServiceImpl implements DocumentRequestService {
         // 6. Return response
         return mapper.toResponse(saved);
     }
-
-    @Override
+    private User getOrCreateUser(String cin) {
+        return userRepository.findByCin(cin)
+                .orElseGet(() -> {
+                    User user = new User();
+                    user.setCin(cin);
+                    return userRepository.save(user);
+                });
+    }
     public List<DocumentRequestResponse> getEmployeeDocumentRequests(String cin) {
 
-        User user = userRepository.findByCin(cin)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+        User user = getOrCreateUser(cin);
 
         return requestRepository.findByUser_IdOrderByRequestDateDesc(user.getId())
                 .stream()

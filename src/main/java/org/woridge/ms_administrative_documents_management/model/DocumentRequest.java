@@ -19,6 +19,7 @@ import lombok.*;
 public class DocumentRequest {
 
     @Id
+    @GeneratedValue
     private UUID id;
 
     @Column(nullable = false)
