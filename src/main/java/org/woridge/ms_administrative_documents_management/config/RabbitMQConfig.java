@@ -65,4 +65,17 @@ public class RabbitMQConfig {
         factory.setMessageConverter(converter);
         return factory;
     }
+
+    @Bean
+    public Queue documentValidatedQueue() {
+        return QueueBuilder.durable("document.validated.queue").build();
+    }
+
+
+    @Bean
+    public Binding documentValidatedBinding() {
+        return BindingBuilder.bind(documentValidatedQueue())
+                .to(exchange())
+                .with(props.getRouting().getDocumentValidated());
+    }
 }
