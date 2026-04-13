@@ -18,5 +18,6 @@ public class RabbitMQProperties {
     @Setter
     public static class Routing {
         private String documentRequestCreated;
+        private String documentValidated;
     }
 }

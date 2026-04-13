@@ -39,6 +39,7 @@ rabbitmq:
   exchange: notification.exchange
   routing:
     documentRequestCreated: document.request.created
+    documentValidated: document.validated
 server:
   port: 8085
   servlet:
