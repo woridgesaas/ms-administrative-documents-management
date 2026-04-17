@@ -13,6 +13,7 @@ spring:
     port: ${RABBITMQ_PORT}
     username: ${RABBITMQ_USERNAME}
     password: ${RABBITMQ_PASSWORD}
+
 thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
@@ -20,6 +21,7 @@ thymeleaf:
     encoding: UTF-8
     cache: false #hot reaload on dev
     check-template-location: true
+
 ressource:
   templates:
     docs-path: "doc/"
@@ -40,9 +42,14 @@ rabbitmq:
   routing:
     documentRequestCreated: document.request.created
     documentValidated: document.validated
+
 server:
   port: 8085
   servlet:
     context-path: /api/documents
+
+internal:
+  secret-key: ${INTERNAL_SECRET_KEY}
+
 services:
   auth-url: ${AUTH_SERVICE_URL}
