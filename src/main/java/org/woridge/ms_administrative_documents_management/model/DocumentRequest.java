@@ -38,4 +38,7 @@ public class DocumentRequest {
     @ManyToOne(optional = false)
     @JoinColumn(name = "type_id", nullable = false)
     private DocumentType type;
+
+    @OneToOne(mappedBy = "request", fetch = FetchType.LAZY)
+    private Document document;
 }

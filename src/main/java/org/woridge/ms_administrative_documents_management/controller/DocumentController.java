@@ -2,20 +2,25 @@ package org.woridge.ms_administrative_documents_management.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.core.io.Resource;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.woridge.ms_administrative_documents_management.dto.CreateDocumentRequest;
 import org.woridge.ms_administrative_documents_management.dto.DocumentRequestResponse;
+import org.woridge.ms_administrative_documents_management.dto.GetDocumentRequest;
 import org.woridge.ms_administrative_documents_management.service.DocumentRequestService;
+import org.woridge.ms_administrative_documents_management.service.DocumentService;
 
 import java.util.List;
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/requests")
 @RequiredArgsConstructor
 public class DocumentController {
 
     private final DocumentRequestService service;
+    private final DocumentService documentService;
 
     @PostMapping
     public ResponseEntity<DocumentRequestResponse> create(
@@ -32,4 +37,29 @@ public class DocumentController {
     ) {
         return ResponseEntity.ok(service.getEmployeeDocumentRequests(cin));
     }
+
+    @GetMapping("/documents")
+    public ResponseEntity<List<GetDocumentRequest>> getMyDocuments(
+            @RequestHeader("X-User-CIN") String cin
+    ) {
+        return ResponseEntity.ok(documentService.getEmployeeDocuments(cin));
+    }
+
+    /*@GetMapping("/{id}/download")
+    public ResponseEntity<Resource> downloadDocument(
+            @PathVariable UUID id,
+            @RequestHeader("X-User-CIN") String cin
+    ) {
+        Resource resource = documentService.downloadDocument(id, cin);
+
+        String filename = resource.getFilename() != null
+                ? resource.getFilename()
+                : "document_" + id + ".pdf";
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"" + filename + "\"")
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(resource);
+    }*/
 }
