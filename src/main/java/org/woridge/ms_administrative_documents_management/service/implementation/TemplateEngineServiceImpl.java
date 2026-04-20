@@ -1,10 +1,8 @@
 package org.woridge.ms_administrative_documents_management.service.implementation;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.exceptions.TemplateInputException;
 import org.thymeleaf.spring6.SpringTemplateEngine;
@@ -19,7 +17,6 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-
 public class TemplateEngineServiceImpl implements TemplateEngineService {
 
     @Autowired

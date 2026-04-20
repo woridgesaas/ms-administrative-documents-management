@@ -1,4 +1,4 @@
-package org.woridge.ms_administrative_documents_management.service.impl;
+package org.woridge.ms_administrative_documents_management.service.implementation;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -16,10 +16,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DocumentTypeServiceImpl implements DocumentTypeService {
 
-    private final DocumentTypeRepository documentTypeRepository;    private final DocumentTypeMapper mapper;
+    private final DocumentTypeRepository documentTypeRepository;
+    private final DocumentTypeMapper mapper;
 
     @Transactional
     public List<DocumentTypeResponse> getAllTypes() {
+
         return documentTypeRepository.findAll()
                 .stream()
                 .sorted(Comparator.comparing(DocumentType::getGroupName))

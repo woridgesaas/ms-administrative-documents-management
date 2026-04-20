@@ -17,7 +17,6 @@ public class DocumentRequestMapper {
 
     public DocumentRequest toEntity(User user, DocumentType type) {
         return DocumentRequest.builder()
-                .id(UUID.randomUUID())
                 .requestDate(LocalDateTime.now())
                 .status(RequestStatus.PENDING)
                 .user(user)

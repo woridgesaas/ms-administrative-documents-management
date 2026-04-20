@@ -9,10 +9,16 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.woridge.ms_administrative_documents_management.dto.ErrorResponse;
 import org.woridge.ms_administrative_documents_management.enumeration.ErrorCode;
+import org.woridge.ms_administrative_documents_management.exception.document.DocumentConversionFailedException;
 import org.woridge.ms_administrative_documents_management.exception.document.DocumentRequestNotFoundException;
 import org.woridge.ms_administrative_documents_management.exception.document.DocumentTypeNotFoundException;
+import org.woridge.ms_administrative_documents_management.exception.minio.MinioBucketCheckFailedException;
+import org.woridge.ms_administrative_documents_management.exception.minio.MinioBucketCreationFailedException;
+import org.woridge.ms_administrative_documents_management.exception.minio.MinioUploadPdfDocumentFailedException;
 import org.woridge.ms_administrative_documents_management.exception.request.MissingCinInRequestHeaderException;
 import org.woridge.ms_administrative_documents_management.exception.request.MissingRoleInRequestHeaderException;
+import org.woridge.ms_administrative_documents_management.exception.request.MissingSubdomainInRequestHeaderException;
+import org.woridge.ms_administrative_documents_management.exception.request.MissingSubscriptionStatusInRequestHeaderException;
 import org.woridge.ms_administrative_documents_management.exception.template.TemplateNotFoundException;
 import org.woridge.ms_administrative_documents_management.exception.user.UserNotFoundException;
 
@@ -27,6 +33,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
+    // Document exceptions
     @ExceptionHandler(DocumentTypeNotFoundException.class)
     public ResponseEntity<String> handleDocumentTypeNotFoundException(DocumentTypeNotFoundException ex) {
 
@@ -44,6 +51,19 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleDocumentRequestNotFoundException(
             DocumentRequestNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(DocumentConversionFailedException.class)
+    public ResponseEntity<ErrorResponse<String>> handleDocumentConversionFailedException(DocumentConversionFailedException exception) {
+
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(
+                        ErrorResponse.createErrorResponse(
+                                exception.getMessage(),
+                                ErrorCode.DOCUMENT_CONVERSION_FAILED
+                        )
+                );
     }
 
     // Request exceptions
@@ -69,6 +89,72 @@ public class GlobalExceptionHandler {
                         ErrorResponse.createErrorResponse(
                                 exception.getMessage(),
                                 ErrorCode.MISSING_GATEWAY_FORWARDED_HEADER
+                        )
+                );
+    }
+
+    @ExceptionHandler(MissingSubdomainInRequestHeaderException.class)
+    public ResponseEntity<ErrorResponse<String>> handleMissingSubdomainInRequestHeaderException(MissingSubdomainInRequestHeaderException exception) {
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_GATEWAY)
+                .body(
+                        ErrorResponse.createErrorResponse(
+                                exception.getMessage(),
+                                ErrorCode.MISSING_GATEWAY_FORWARDED_HEADER
+                        )
+                );
+    }
+
+    @ExceptionHandler(MissingSubscriptionStatusInRequestHeaderException.class)
+    public ResponseEntity<ErrorResponse<String>> handleMissingSubscriptionStatusInRequestHeaderException(MissingSubscriptionStatusInRequestHeaderException exception) {
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_GATEWAY)
+                .body(
+                        ErrorResponse.createErrorResponse(
+                                exception.getMessage(),
+                                ErrorCode.MISSING_GATEWAY_FORWARDED_HEADER
+                        )
+                );
+    }
+
+    // Minio exception
+    @ExceptionHandler(MinioBucketCheckFailedException.class)
+    public ResponseEntity<ErrorResponse<String>> handleMinioBucketCheckFailedException(MinioBucketCheckFailedException exception) {
+
+        return ResponseEntity
+                .status(HttpStatus.SERVICE_UNAVAILABLE)
+                .body(
+                        ErrorResponse.createErrorResponse(
+                                exception.getMessage(),
+                                ErrorCode.MINIO_BUCKET_CHECK_FAILED
+                        )
+                );
+    }
+
+    @ExceptionHandler(MinioBucketCreationFailedException.class)
+    public ResponseEntity<ErrorResponse<String>> handleMinioBucketCreationFailedException(MinioBucketCreationFailedException exception) {
+
+        return ResponseEntity
+                .status(HttpStatus.SERVICE_UNAVAILABLE)
+                .body(
+                        ErrorResponse.createErrorResponse(
+                                exception.getMessage(),
+                                ErrorCode.MINIO_BUCKET_CREATION_FAILED
+                        )
+                );
+    }
+
+    @ExceptionHandler(MinioUploadPdfDocumentFailedException.class)
+    public ResponseEntity<ErrorResponse<String>> handleMinioUploadFailedException(MinioUploadPdfDocumentFailedException exception) {
+
+        return ResponseEntity
+                .status(HttpStatus.SERVICE_UNAVAILABLE)
+                .body(
+                        ErrorResponse.createErrorResponse(
+                                exception.getMessage(),
+                                ErrorCode.MINIO_UPLOAD_FAILED
                         )
                 );
     }

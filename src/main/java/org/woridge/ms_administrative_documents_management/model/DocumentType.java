@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.UUID;
+
 @Entity
 @Table(name = "document_types")
 @Getter
@@ -12,14 +13,16 @@ import java.util.UUID;
 public class DocumentType {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(nullable = false, unique = true)
     private String category;
 
-    @Column(name = "group_name",nullable = false)
-    private String groupName;
+    @Column(nullable = false)
+    private String templateCode;
 
+    @Column(nullable = false)
+    private String groupName;
     private String description;
 }
