@@ -10,11 +10,13 @@ CREATE TABLE users
 -- Document types table
 CREATE TABLE document_types
 (
-    id          UUID PRIMARY KEY,
-    category    VARCHAR(50)                           NOT NULL,
-    description TEXT,
-    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    updated_at  TIMESTAMPTZ
+    id            UUID PRIMARY KEY,
+    category      VARCHAR(50) UNIQUE                    NOT NULL,
+    template_code VARCHAR(50),
+    group_name    VARCHAR(50),
+    description   TEXT,
+    created_at    TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at    TIMESTAMPTZ
 );
 
 -- Document requests
@@ -43,13 +45,13 @@ CREATE TABLE document_requests
 -- Documents table
 CREATE TABLE documents
 (
-    id              UUID PRIMARY KEY,
-    generation_date TIMESTAMP,
-    path            TEXT,
-    request_id      UUID UNIQUE,
+    id                  UUID PRIMARY KEY,
+    path                TEXT                                  NOT NULL,
+    document_request_id UUID UNIQUE                           NOT NULL,
+    generated_at        TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP NOT NULL,
 
     CONSTRAINT fk_document_request
-        FOREIGN KEY (request_id)
+        FOREIGN KEY (document_request_id)
             REFERENCES document_requests (id)
             ON DELETE RESTRICT
             ON UPDATE RESTRICT

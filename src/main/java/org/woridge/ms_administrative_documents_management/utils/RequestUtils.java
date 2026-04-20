@@ -3,6 +3,8 @@ package org.woridge.ms_administrative_documents_management.utils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.woridge.ms_administrative_documents_management.exception.request.MissingCinInRequestHeaderException;
 import org.woridge.ms_administrative_documents_management.exception.request.MissingRoleInRequestHeaderException;
+import org.woridge.ms_administrative_documents_management.exception.request.MissingSubdomainInRequestHeaderException;
+import org.woridge.ms_administrative_documents_management.exception.request.MissingSubscriptionStatusInRequestHeaderException;
 
 public final class RequestUtils {
 
@@ -11,9 +13,9 @@ public final class RequestUtils {
         throw new UnsupportedOperationException("You can't instantiate request utils object");
     }
 
-    public static String extractCINFromHeaderRequest(HttpServletRequest request) {
+    public static String extractCINFromHeaderRequest(HttpServletRequest httpServletRequest) {
 
-        String CIN = request.getHeader("X-User-CIN");
+        String CIN = httpServletRequest.getHeader("X-User-CIN");
 
         if (CIN == null || CIN.isBlank()) {
 
@@ -23,9 +25,9 @@ public final class RequestUtils {
         return CIN;
     }
 
-    public static String extractRoleFromHeaderRequest(HttpServletRequest request) {
+    public static String extractRoleFromHeaderRequest(HttpServletRequest httpServletRequest) {
 
-        String role = request.getHeader("X-User-Role");
+        String role = httpServletRequest.getHeader("X-User-Role");
 
         if (role == null || role.isBlank()) {
 
@@ -33,5 +35,29 @@ public final class RequestUtils {
         }
 
         return role;
+    }
+
+    public static String extractSubdomainFromHeaderRequest(HttpServletRequest httpServletRequest) {
+
+        String subdomain = httpServletRequest.getHeader("X-Subdomain");
+
+        if (subdomain == null || subdomain.isBlank()) {
+
+            throw new MissingSubdomainInRequestHeaderException("Missing subdomain in request header");
+        }
+
+        return subdomain;
+    }
+
+    public static String extractSubscriptionStatusFromHeaderRequest(HttpServletRequest httpServletRequest) {
+
+        String subdomain = httpServletRequest.getHeader("X-Tenant-Status");
+
+        if (subdomain == null || subdomain.isBlank()) {
+
+            throw new MissingSubscriptionStatusInRequestHeaderException("Missing subscription status in request header");
+        }
+
+        return subdomain;
     }
 }

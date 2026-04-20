@@ -1,8 +1,8 @@
-/*package org.woridge.ms_administrative_documents_management.service;
-
-import org.springframework.core.io.Resource;
+package org.woridge.ms_administrative_documents_management.service;
 
 public interface MinioService {
-     Resource downloadFile(String objectName);
+
+    String uploadPdfDocument(String tenantName, String fileName, byte[] content);
+
+    // Resource downloadFile(String objectName);
 }
-*/

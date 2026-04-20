@@ -13,4 +13,12 @@ public enum ErrorCode {
 
     // Enumeration value
     INVALID_ENUM_VALUE,
+
+    // Minio
+    MINIO_BUCKET_CHECK_FAILED,
+    MINIO_BUCKET_CREATION_FAILED,
+    MINIO_UPLOAD_FAILED,
+
+    // Document
+    DOCUMENT_CONVERSION_FAILED
 }

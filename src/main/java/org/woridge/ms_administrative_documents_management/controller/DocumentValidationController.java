@@ -1,4 +1,3 @@
-// src/main/java/.../controller/DocumentValidationController.java
 package org.woridge.ms_administrative_documents_management.controller;
 
 import lombok.RequiredArgsConstructor;
@@ -6,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.woridge.ms_administrative_documents_management.dto.DocumentRequestResponse;
 import org.woridge.ms_administrative_documents_management.dto.DocumentValidationResponse;
-import org.woridge.ms_administrative_documents_management.enumeration.RequestStatus;
 import org.woridge.ms_administrative_documents_management.enumeration.ValidationAction;
 import org.woridge.ms_administrative_documents_management.service.DocumentValidationService;
 

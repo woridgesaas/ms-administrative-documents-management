@@ -5,12 +5,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.woridge.ms_administrative_documents_management.model.Document;
-import org.woridge.ms_administrative_documents_management.model.DocumentRequest;
 
 import java.util.Optional;
 import java.util.UUID;
+
 @Repository
-public interface DocumentRepository extends JpaRepository<DocumentRequest, UUID> {
+public interface DocumentRepository extends JpaRepository<Document, UUID> {
+
     @Query("""
                 SELECT d FROM Document d
                 JOIN FETCH d.request dr

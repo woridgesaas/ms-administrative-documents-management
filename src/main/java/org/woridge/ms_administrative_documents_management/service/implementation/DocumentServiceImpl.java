@@ -1,30 +1,36 @@
 package org.woridge.ms_administrative_documents_management.service.implementation;
 
-import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.Resource;
+import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.woridge.ms_administrative_documents_management.dto.GetDocumentRequest;
+import org.woridge.ms_administrative_documents_management.mapper.DocumentMapper;
 import org.woridge.ms_administrative_documents_management.mapper.DocumentRequestMapper;
 import org.woridge.ms_administrative_documents_management.model.Document;
 import org.woridge.ms_administrative_documents_management.model.DocumentRequest;
 import org.woridge.ms_administrative_documents_management.repository.DocumentRepository;
 import org.woridge.ms_administrative_documents_management.repository.DocumentRequestRepository;
 import org.woridge.ms_administrative_documents_management.service.DocumentService;
-//import org.woridge.ms_administrative_documents_management.service.MinioService;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
+@Transactional
+@AllArgsConstructor
 public class DocumentServiceImpl implements DocumentService {
 
     private final DocumentRequestRepository documentRequestRepository;
     private final DocumentRepository documentRepository;
     private final DocumentRequestMapper documentRequestMapper;
     //private final MinioService minioService;
+
+    @Override
+    public void addDocument(DocumentRequest documentRequest, String documentPath) {
+
+        Document document = DocumentMapper.toDocument(documentRequest, documentPath);
+        documentRepository.save(document);
+    }
 
     @Override
     public List<GetDocumentRequest> getEmployeeDocuments(String cin) {

@@ -1,9 +1,9 @@
 package org.woridge.ms_administrative_documents_management.controller;
 
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.Resource;
+import lombok.AllArgsConstructor;
 import org.springframework.http.*;
+
 import org.springframework.web.bind.annotation.*;
 import org.woridge.ms_administrative_documents_management.dto.CreateDocumentRequest;
 import org.woridge.ms_administrative_documents_management.dto.DocumentRequestResponse;
@@ -12,11 +12,10 @@ import org.woridge.ms_administrative_documents_management.service.DocumentReques
 import org.woridge.ms_administrative_documents_management.service.DocumentService;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/requests")
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class DocumentController {
 
     private final DocumentRequestService service;
