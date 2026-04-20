@@ -13,9 +13,9 @@ import java.util.UUID;
 public interface DocumentRepository extends JpaRepository<Document, UUID> {
 
     @Query("""
-                SELECT d FROM Document d
-                JOIN FETCH d.request dr
-                WHERE dr.id = :requestId
+                SELECT d FROM Document d 
+                JOIN FETCH d.documentRequest dr 
+                WHERE dr.id = :requestId 
                 AND dr.user.cin = :cin
             """)
     Optional<Document> findByRequestIdAndUserCin(
