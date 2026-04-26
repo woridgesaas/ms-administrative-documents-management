@@ -34,7 +34,7 @@ public class TemplateEngineServiceImpl implements TemplateEngineService {
      * Render a template with the given data
      * @param templateName name of template in /templates/docs/ (ex: "mission-order")
      * @param data Map that hold data like (${tenantName}, ${transportModes}...)
-     * @return Compiled HTML  sous forme de String can used to generate PDF
+     * @return Compiled HTML ,String can used to generate PDF
      */
     @Override
     public String render(DocumentTemplateType templateName, Map<String, Object> data) {
