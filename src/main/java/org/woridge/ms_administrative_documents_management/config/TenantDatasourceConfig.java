@@ -2,7 +2,10 @@ package org.woridge.ms_administrative_documents_management.config;
 
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.spi.LoggerContext;
 import org.jspecify.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Primary;
@@ -41,8 +44,6 @@ public class TenantDatasourceConfig  extends AbstractRoutingDataSource {
     private String defaultPassword;
 
     private final Map<String, DataSource> tenantCache = new ConcurrentHashMap<>();
-
-
     @PostConstruct
     public void init() {
         //Default

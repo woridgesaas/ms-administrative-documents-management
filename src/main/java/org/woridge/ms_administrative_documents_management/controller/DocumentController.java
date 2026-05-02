@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.woridge.ms_administrative_documents_management.dto.CreateDocumentRequest;
 import org.woridge.ms_administrative_documents_management.dto.DocumentRequestResponse;
 import org.woridge.ms_administrative_documents_management.dto.GetDocumentRequest;
+import org.woridge.ms_administrative_documents_management.service.AuditService;
 import org.woridge.ms_administrative_documents_management.service.DocumentRequestService;
 import org.woridge.ms_administrative_documents_management.service.DocumentService;
 
@@ -18,6 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 public class DocumentController {
 
+    private final AuditService auditService;
     private final DocumentRequestService service;
     private final DocumentService documentService;
 
