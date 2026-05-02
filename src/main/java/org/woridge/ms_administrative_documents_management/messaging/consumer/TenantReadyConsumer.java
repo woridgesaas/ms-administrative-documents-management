@@ -16,7 +16,7 @@ public class TenantReadyConsumer {
 
     @RabbitListener(queues = "${rabbitmq.queue.provisioning}")
     public void handleMessage(TenantReadyEvent event){
-        log.info("Recieve a message fro tenant {} with service key " , event.getSubdomain() , event.getServiceKey());
+        log.info("Recieve a message fro tenant {} with service key {} " , event.getSubdomain() , event.getServiceKey());
         this.provisioningService.runMigrationsForTenant(event.getSubdomain()  , event.getServiceKey());
     }
 }
