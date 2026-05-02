@@ -41,4 +41,3 @@ src/main/resources/application-dev.yaml
 # Logs
 logs/
 *.log
-*.json
