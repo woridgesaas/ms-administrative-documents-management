@@ -19,5 +19,6 @@ public class RabbitMQProperties {
     public static class Routing {
         private String documentRequestCreated;
         private String documentValidated;
+        private String tenantReady;
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFacto
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.support.converter.JacksonJsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.woridge.ms_administrative_documents_management.properties.RabbitMQProperties;
@@ -15,6 +16,9 @@ import org.woridge.ms_administrative_documents_management.properties.RabbitMQPro
 public class RabbitMQConfig {
 
     private final RabbitMQProperties props;
+
+    @Value("${rabbitmq.queue.provisioning}")
+    private String provisioningQueue;
 
     // ===== QUEUES =====
     @Bean
@@ -27,6 +31,12 @@ public class RabbitMQConfig {
         return QueueBuilder.durable("document.request.queue").build();
     }
 
+    @Bean
+    public Queue tenantReadyQueue(){
+        return QueueBuilder
+                .durable(this.provisioningQueue)
+                    .build();
+    }
     // ===== EXCHANGE =====
     @Bean
     public TopicExchange exchange() {
@@ -77,5 +87,13 @@ public class RabbitMQConfig {
         return BindingBuilder.bind(documentValidatedQueue())
                 .to(exchange())
                 .with(props.getRouting().getDocumentValidated());
+    }
+
+    @Bean
+    public Binding provisioningBinding(){
+        return BindingBuilder
+                .bind(tenantReadyQueue())
+                .to(exchange())
+                .with(this.props.getRouting().getTenantReady());
     }
 }
