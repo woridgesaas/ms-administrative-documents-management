@@ -63,7 +63,7 @@ public class TenantDatasourceConfig  extends AbstractRoutingDataSource {
 
     @Override
     protected DataSource determineTargetDataSource() {
-        String tenantId = TenantContext.getTenantId();
+        String tenantId = (String) this.determineCurrentLookupKey();
         log.info("Determining the tenant {} " , tenantId);
         if (tenantId != null) {
             return tenantCache.computeIfAbsent(tenantId,
