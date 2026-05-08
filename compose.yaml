@@ -2,7 +2,7 @@ services:
 
   woridge.db.documents:
     image: postgres:16
-    container_name: "woridge-db-documents"
+    container_name: "administrative_documents_db"
     env_file:
       - .env
     ports:
@@ -23,16 +23,16 @@ services:
     build:
       context: .
       dockerfile: infra/Dockerfile
-    container_name: "woridge-ms-administrative-documents"
+    container_name: "ms-administrative-documents"
     env_file:
       - .env
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://woridge.db.documents:5432/${POSTGRES_DB}
+      SPRING_DATASOURCE_URL: ${POSTGRES_URL}
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "${SERVER_PORT}:8080"
-    restart: unless-stopped
+    restart: always
     depends_on:
       woridge.db.documents:
         condition: service_healthy
